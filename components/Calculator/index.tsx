@@ -17,12 +17,13 @@ const Calculator: FC<CalculatorPropsType> = () => {
   return (
     <div>
       "Calculator"
-      <br />
+      <hr />
       <Product />
       <hr />
       <Location />
       <hr />
       <Cart />
+      <hr />
     </div>
   );
 };
