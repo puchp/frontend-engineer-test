@@ -1,12 +1,11 @@
-// TODO: add axios get for Locations data
+import axios from "axios";
+
+import { API_URL } from "../configs";
+import { LocationType } from "../types/Location";
 
 // Locations
-// Endpoint: GET ​https://5efabb3a80d8170016f758ee.mockapi.io/locations Returns an array of Location objects
+// Endpoint: GET ​API_URL/locations Returns an array of Location objects
 
-// {
-// "id": "1",
-// "lat": 13.7398994, "long": 100.5391488, "name": "Asoke", "fee": 1000, "max_dist": 1000
-// }
 // The Location object is made up of:
 // ● Id
 // ● Name: Name of the location
@@ -14,8 +13,6 @@
 // ● Long: the Longitude of the location
 // ● Max Dist: the total number of items that can be distributed in one day at the location
 // ● Fee: Daily fee of distributing items at the location
-
-import { LocationType } from "../types/Location";
 
 export const mockLocation: LocationType[] = [
   {
@@ -64,3 +61,14 @@ export const mockLocation: LocationType[] = [
     max_dist: 1750,
   },
 ];
+
+export const getLocations = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/locations`);
+    console.log("response: ", response);
+    return (response && response.data) || [];
+  } catch (error) {
+    console.log("Request error", error.message);
+    return [];
+  }
+};
