@@ -27,7 +27,7 @@ const Product: FC<ProductPropsType> = () => {
       "Product component"
       <br />
       {isLoadingProducts ? (
-        <p>Loading</p>
+        <p>Loading...</p>
       ) : (
         <p>{JSON.stringify(productsData)}</p>
       )}
