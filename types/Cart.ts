@@ -5,6 +5,6 @@ export type InputLocationType = {
 
 export type InputCartType = {
   date: string;
-  product: string;
+  product: number;
   locations: InputLocationType[];
 };
