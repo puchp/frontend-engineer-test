@@ -1,15 +1,16 @@
-// TODO: add axios get for Products data
+import axios from "axios";
+
+import { API_URL } from "../configs";
+import { ProductType } from "../types/Product";
 
 // Products
-// Endpoint: GET ​https://5efabb3a80d8170016f758ee.mockapi.io/products
+// Endpoint: GET ​API_URL/products
 
 // The product object is made up of:
 // ● Id
 // ● Name: Name of the product
 // ● Max Production: Maximum number of product available per day in the future
 // ● Price Per Unit: cost per item
-
-import { ProductType } from "../types/Product";
 
 export const mockProducts: ProductType[] = [
   {
@@ -37,3 +38,14 @@ export const mockProducts: ProductType[] = [
     price_per_unit: 2.1,
   },
 ];
+
+export const getProducts = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/products`);
+    console.log("response: ", response);
+    return (response && response.data) || [];
+  } catch (error) {
+    console.log("Request error", error.message);
+    return [];
+  }
+};
