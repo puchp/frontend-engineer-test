@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState, MouseEvent } from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import ButtonBase from "@material-ui/core/ButtonBase";
@@ -20,10 +20,9 @@ type MarkerPropsType = {
 export const MarkerComponent: FC<MarkerPropsType> = (props) => {
   const { name, fee, max_dist, id, addLocation, disabled } = props;
 
-  const [anchorEl, setAnchorEl] =
-    React.useState<HTMLButtonElement | null>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 

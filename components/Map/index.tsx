@@ -57,6 +57,7 @@ const Map: FC<LocationHeaderPropsType> = (props) => {
         { ...findLocationById, quantity: 0 },
       ];
       setSelectedLocations(locationsDataWithUnit);
+      setOpen(false);
     }
   };
 

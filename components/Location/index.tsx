@@ -21,17 +21,15 @@ const Location: FC<LocationPropsType> = (props) => {
 
   return (
     <Grid container justify="center">
-      <Grid container justify="center">
-        <LocationHeader
-          selectedLocations={selectedLocations}
-          setSelectedLocations={setSelectedLocations}
-        />
-        <LocationList
-          selectedProduct={selectedProduct}
-          selectedLocations={selectedLocations}
-          setSelectedLocations={setSelectedLocations}
-        />
-      </Grid>
+      <LocationHeader
+        selectedLocations={selectedLocations}
+        setSelectedLocations={setSelectedLocations}
+      />
+      <LocationList
+        selectedProduct={selectedProduct}
+        selectedLocations={selectedLocations}
+        setSelectedLocations={setSelectedLocations}
+      />
     </Grid>
   );
 };
