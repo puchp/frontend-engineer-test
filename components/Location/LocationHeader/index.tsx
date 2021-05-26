@@ -18,13 +18,13 @@ const LocationHeader: FC<LocationHeaderPropsType> = (props) => {
 
   return (
     <Grid container justify="center" alignContent="center" alignItems="center">
-      <Grid item xs={3}>
+      <Grid item xs={2}>
         <Typography variant="subtitle1">Place</Typography>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={5}>
         <Typography variant="subtitle1">Unit</Typography>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={2}>
         <Typography variant="subtitle1">Cost</Typography>
       </Grid>
       <Grid item xs={2} container justify="center">

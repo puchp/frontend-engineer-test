@@ -109,6 +109,7 @@ const Calculator: FC<CalculatorPropsType> = () => {
 
                 <Grid item xs={12} className="mt-1">
                   <Location
+                    selectedDate={selectedDate}
                     selectedProduct={selectedProduct}
                     selectedLocations={selectedLocations}
                     setSelectedLocations={setSelectedLocations}

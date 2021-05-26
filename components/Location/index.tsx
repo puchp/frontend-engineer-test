@@ -9,6 +9,7 @@ import LocationHeader from "./LocationHeader";
 import LocationList from "./LocationList";
 
 type LocationPropsType = {
+  selectedDate: Date;
   selectedLocations: SelectLocationType[];
   selectedProduct: ProductType | undefined;
   setSelectedLocations: React.Dispatch<
@@ -17,7 +18,12 @@ type LocationPropsType = {
 };
 
 const Location: FC<LocationPropsType> = (props) => {
-  const { selectedLocations, selectedProduct, setSelectedLocations } = props;
+  const {
+    selectedDate,
+    selectedLocations,
+    selectedProduct,
+    setSelectedLocations,
+  } = props;
 
   return (
     <Grid container justify="center">
@@ -26,6 +32,7 @@ const Location: FC<LocationPropsType> = (props) => {
         setSelectedLocations={setSelectedLocations}
       />
       <LocationList
+        selectedDate={selectedDate}
         selectedProduct={selectedProduct}
         selectedLocations={selectedLocations}
         setSelectedLocations={setSelectedLocations}

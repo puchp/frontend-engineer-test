@@ -8,9 +8,13 @@ import Typography from "@material-ui/core/Typography";
 
 import { SelectLocationType } from "../../../types/Location";
 import { ProductType } from "../../../types/Product";
-import { getCostBasedLocation } from "../../../utils";
+import {
+  getCostBasedLocation,
+  getMaximumAvailableProductFromDateSelected,
+} from "../../../utils";
 
 type LocationPropsType = {
+  selectedDate: Date;
   selectedProduct: ProductType | undefined;
   selectedLocations: SelectLocationType[];
   setSelectedLocations: React.Dispatch<
@@ -19,7 +23,12 @@ type LocationPropsType = {
 };
 
 const LocationList: FC<LocationPropsType> = (props) => {
-  const { selectedLocations, setSelectedLocations, selectedProduct } = props;
+  const {
+    selectedDate,
+    selectedLocations,
+    setSelectedLocations,
+    selectedProduct,
+  } = props;
 
   const removeLocation = (id: string) => {
     const newLocationsData = selectedLocations.filter(
@@ -41,58 +50,70 @@ const LocationList: FC<LocationPropsType> = (props) => {
 
   return (
     <>
-      {selectedLocations.map((location: SelectLocationType) => (
-        <Grid
-          key={location.id}
-          container
-          justify="center"
-          alignContent="center"
-          alignItems="center"
-        >
-          <Grid item xs={3}>
-            <Typography variant="subtitle2">{location.name}</Typography>
+      {selectedLocations.map((location: SelectLocationType) => {
+        const maximumAmount = getMaximumAvailableProductFromDateSelected(
+          selectedProduct,
+          selectedDate
+        );
+
+        return (
+          <Grid
+            key={location.id}
+            container
+            justify="center"
+            alignContent="center"
+            alignItems="center"
+          >
+            <Grid item xs={2}>
+              <Typography variant="subtitle2">{location.name}</Typography>
+            </Grid>
+            <Grid item xs={5}>
+              <TextField
+                type="number"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="outlined"
+                value={location.quantity}
+                inputProps={{
+                  step: 1,
+                  min: 0,
+                  max: Number(maximumAmount),
+                  type: "number",
+                  style: { fontSize: 14, padding: 12 },
+                }}
+                onChange={(event) => {
+                  handleChangeUnit(location.id, event.target.value);
+                }}
+                error={
+                  // TODO: move to form validate
+                  location.quantity > maximumAmount
+                }
+                helperText={`maximum ${maximumAmount}`}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <Typography variant="subtitle2">
+                {Number(
+                  getCostBasedLocation(
+                    selectedProduct,
+                    location,
+                    location.quantity
+                  )
+                ).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </Typography>
+            </Grid>
+            <Grid item xs={2} container justify="center">
+              <IconButton onClick={() => removeLocation(location.id)}>
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            </Grid>
           </Grid>
-          <Grid item xs={3}>
-            <TextField
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="outlined"
-              defaultValue={location.quantity}
-              inputProps={{
-                step: 1,
-                min: 0,
-                max: Number(location.max_dist),
-                type: "number",
-                style: { fontSize: 14, padding: 12 },
-              }}
-              onChange={(event) => {
-                handleChangeUnit(location.id, event.target.value);
-              }}
-            />
-          </Grid>
-          <Grid item xs={3}>
-            <Typography variant="subtitle2">
-              {Number(
-                getCostBasedLocation(
-                  selectedProduct,
-                  location,
-                  location.quantity
-                )
-              ).toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-            </Typography>
-          </Grid>
-          <Grid item xs={2} container justify="center">
-            <IconButton onClick={() => removeLocation(location.id)}>
-              <DeleteIcon fontSize="small" />
-            </IconButton>
-          </Grid>
-        </Grid>
-      ))}
+        );
+      })}
     </>
   );
 };
