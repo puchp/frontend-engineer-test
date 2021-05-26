@@ -70,10 +70,10 @@ const LocationList: FC<LocationPropsType> = (props) => {
             alignContent="center"
             alignItems="center"
           >
-            <Grid item xs={2}>
+            <Grid item xs={2} container>
               <Typography variant="subtitle2">{location.name}</Typography>
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <TextField
                 type="number"
                 InputLabelProps={{
@@ -86,7 +86,7 @@ const LocationList: FC<LocationPropsType> = (props) => {
                   min: 0,
                   max: Number(maximumAmount),
                   type: "number",
-                  style: { fontSize: 14, padding: 12 },
+                  style: { fontSize: 14, padding: 9 },
                 }}
                 onChange={(event) => {
                   handleChangeUnit(location.id, event.target.value);

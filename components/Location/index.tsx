@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
 import { ProductType } from "../../types/Product";
 import { SelectLocationType } from "../../types/Location";
@@ -31,12 +32,16 @@ const Location: FC<LocationPropsType> = (props) => {
         selectedLocations={selectedLocations}
         setSelectedLocations={setSelectedLocations}
       />
-      <LocationList
-        selectedDate={selectedDate}
-        selectedProduct={selectedProduct}
-        selectedLocations={selectedLocations}
-        setSelectedLocations={setSelectedLocations}
-      />
+      {selectedLocations.length ? (
+        <LocationList
+          selectedDate={selectedDate}
+          selectedProduct={selectedProduct}
+          selectedLocations={selectedLocations}
+          setSelectedLocations={setSelectedLocations}
+        />
+      ) : (
+        <Typography variant="subtitle2">Please add locations</Typography>
+      )}
     </Grid>
   );
 };

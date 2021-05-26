@@ -2,6 +2,8 @@ import React, { FC, useState, useEffect } from "react";
 import { format, addDays } from "date-fns";
 
 import Card from "@material-ui/core/Card";
+import Container from "@material-ui/core/Container";
+
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { DatePicker } from "@material-ui/pickers";
@@ -57,10 +59,10 @@ const Calculator: FC<CalculatorPropsType> = () => {
   }, []);
 
   return (
-    <Grid container className="p-1">
+    <Grid container>
       <Grid item xs={12}>
-        <Card className="p-1" style={{ background: "#ccc" }}>
-          <Grid item xs={12} className="py-3">
+        <Container className="p-1" style={{ background: "#ccc" }} maxWidth="sm">
+          <Grid item xs={12} className="py-2 pl-3">
             <Typography variant="subtitle1">Calculator</Typography>
           </Grid>
           <Card className="p-3 m-2">
@@ -123,20 +125,24 @@ const Calculator: FC<CalculatorPropsType> = () => {
               selectedLocations.length &&
               getTotalQuantity(selectedLocations)
           ) && (
-            <Card className="p-3 m-2">
-              <Grid item xs={12} className="py-3">
-                <Grid item xs={12} className="py-3">
-                  Total Units : {getTotalQuantity(selectedLocations)}
+            <Card className="px-3 m-2">
+              <Grid item xs={12} className="pb-3">
+                <Grid item xs={12} className="py-3" container>
+                  <Typography variant="subtitle2">
+                    Total Units : {getTotalQuantity(selectedLocations)}
+                  </Typography>
                 </Grid>
 
-                <Grid item xs={12} className="py-3">
-                  Total Cost :&nbsp;
-                  {Number(
-                    getTotalCost(selectedProduct, selectedLocations)
-                  ).toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
+                <Grid item xs={12} className="py-3" container>
+                  <Typography variant="subtitle2">
+                    Total Cost :&nbsp;
+                    {Number(
+                      getTotalCost(selectedProduct, selectedLocations)
+                    ).toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </Typography>
                 </Grid>
                 <Cart
                   cartInput={{
@@ -155,7 +161,7 @@ const Calculator: FC<CalculatorPropsType> = () => {
               </Grid>
             </Card>
           )}
-        </Card>
+        </Container>
       </Grid>
     </Grid>
   );

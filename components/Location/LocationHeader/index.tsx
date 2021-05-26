@@ -21,7 +21,7 @@ const LocationHeader: FC<LocationHeaderPropsType> = (props) => {
       <Grid item xs={2}>
         <Typography variant="subtitle1">Place</Typography>
       </Grid>
-      <Grid item xs={5}>
+      <Grid item xs={6}>
         <Typography variant="subtitle1">Unit</Typography>
       </Grid>
       <Grid item xs={2}>
@@ -33,6 +33,7 @@ const LocationHeader: FC<LocationHeaderPropsType> = (props) => {
           setSelectedLocations={setSelectedLocations}
         />
       </Grid>
+      <div className="my-2 border w-100" />
     </Grid>
   );
 };
