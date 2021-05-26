@@ -7,18 +7,18 @@ import RoomIcon from "@material-ui/icons/Room";
 import Typography from "@material-ui/core/Typography";
 
 type MarkerPropsType = {
-  text: string;
+  id: string;
+  name: string;
   lat: number;
   lng: number;
   fee: number;
   max_dist: number;
-  id: string;
   addLocation: Function;
   disabled: boolean;
 };
 
 export const MarkerComponent: FC<MarkerPropsType> = (props) => {
-  const { text, fee, max_dist, id, addLocation, disabled } = props;
+  const { name, fee, max_dist, id, addLocation, disabled } = props;
 
   const [anchorEl, setAnchorEl] =
     React.useState<HTMLButtonElement | null>(null);
@@ -58,16 +58,20 @@ export const MarkerComponent: FC<MarkerPropsType> = (props) => {
             background: "#fff",
             padding: 20,
             width: 200,
-            height: 120,
+            height: 130,
           }}
         >
           <Grid container>
+            <Typography variant="subtitle1">{name}</Typography>
+
+            <Typography variant="subtitle2"> max units: {max_dist}</Typography>
+            <Typography variant="subtitle2"> fee: {fee}</Typography>
+
             <Grid container>
-              <Grid item xs={8}>
-                <Typography variant="subtitle1">{text}</Typography>
-              </Grid>
+              <Grid item xs={8}></Grid>
               <Grid item xs={4}>
                 <Button
+                  size="small"
                   disabled={disabled}
                   variant="contained"
                   onClick={() => {
@@ -79,8 +83,6 @@ export const MarkerComponent: FC<MarkerPropsType> = (props) => {
                 </Button>
               </Grid>
             </Grid>
-            <Typography variant="subtitle2"> max units: {max_dist}</Typography>
-            <Typography variant="subtitle2"> fee: {fee}</Typography>
           </Grid>
         </div>
       </Popover>
