@@ -7,7 +7,7 @@ import Select from "@material-ui/core/Select";
 
 import { ProductType } from "../../types/Product";
 
-type ProductPropsType = {
+type ProductSelectPropsType = {
   productsData: ProductType[];
   handleProductChange: React.Dispatch<
     React.SetStateAction<ProductType | undefined>
@@ -15,7 +15,7 @@ type ProductPropsType = {
   isLoadingProducts: boolean;
 };
 
-const Product: FC<ProductPropsType> = (props) => {
+const ProductSelect: FC<ProductSelectPropsType> = (props) => {
   const { handleProductChange, isLoadingProducts, productsData } = props;
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -49,4 +49,4 @@ const Product: FC<ProductPropsType> = (props) => {
   );
 };
 
-export default Product;
+export default ProductSelect;

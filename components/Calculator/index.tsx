@@ -15,10 +15,10 @@ import { SelectLocationType } from "../../types/Location";
 import { getTotalQuantity, getTotalCost } from "../../utils";
 
 import Cart from "../Cart";
-import Location from "../ProductBasedLocation";
-import Product from "../Product";
+import ProductSelect from "../ProductSelect";
+import ProductBasedLocation from "../ProductBasedLocation";
+import { DATE_FORMAT } from "../../constants";
 
-const DATE_FORMAT = "yyyy-MM-dd";
 // 1) The User will pick the product and date.
 //     Based on this choice the app can work out the maximum number of units available to produce on that date.
 //
@@ -71,7 +71,7 @@ const Calculator: FC<CalculatorPropsType> = () => {
                 Select products
               </Typography>
               <Grid item xs={12}>
-                <Product
+                <ProductSelect
                   productsData={productsData}
                   isLoadingProducts={isLoadingProducts}
                   handleProductChange={handleProductChange}
@@ -110,7 +110,7 @@ const Calculator: FC<CalculatorPropsType> = () => {
                 <Typography variant="subtitle2">Select locations</Typography>
 
                 <Grid item xs={12} className="mt-1">
-                  <Location
+                  <ProductBasedLocation
                     selectedDate={selectedDate}
                     selectedProduct={selectedProduct}
                     selectedLocations={selectedLocations}
