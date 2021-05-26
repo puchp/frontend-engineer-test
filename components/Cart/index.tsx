@@ -23,10 +23,6 @@ const Cart: FC<CartPropsType> = (props) => {
 
   return (
     <div>
-      "Cart component"
-      {responseInfo && <p>{JSON.stringify(responseInfo)}</p>}
-      <br />
-      <p>cartInput: {JSON.stringify(cartInput)}</p>
       <button
         type="button"
         onClick={() => handleSubmitCart()}
@@ -34,6 +30,10 @@ const Cart: FC<CartPropsType> = (props) => {
       >
         Submit
       </button>
+      <br />
+      <p>cartInput: {JSON.stringify(cartInput)}</p>
+      <br />
+      {responseInfo && <p>{JSON.stringify(responseInfo)}</p>}
     </div>
   );
 };

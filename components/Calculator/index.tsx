@@ -10,6 +10,10 @@ import { DatePicker } from "@material-ui/pickers";
 import { getProducts } from "../../services/product";
 import { ProductType } from "../../types/Product";
 
+import { LocationType, SelectLocationType } from "../../types/Location";
+import { getLocations } from "../../services/location";
+import { getTotalQuantity, getTotalCost } from "../../utils";
+
 import Cart from "../Cart";
 import Location from "../Location";
 import Product from "../Product";
@@ -31,19 +35,38 @@ const DATE_FORMAT = "yyyy-MM-dd";
 type CalculatorPropsType = {};
 
 const Calculator: FC<CalculatorPropsType> = () => {
-  const [selectedProduct, handleProductChange] = useState<string>("");
+  const [selectedProduct, handleProductChange] =
+    useState<ProductType | undefined>();
   const [selectedDate, handleDateChange] = useState(new Date());
-  const [selectedLocations, handleLocationChange] = useState([
-    {
-      id: 1,
-      quantity: 100,
-    },
-  ]);
 
-  const [isLoadingProducts, setIsLoadingProducts] = useState(false);
+  const [selectedLocations, setSelectedLocations] = useState<
+    SelectLocationType[] | []
+  >([]);
+
   const [productsData, setProductsData] = useState<ProductType[] | []>([]);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(false);
+
+  // TODO: using this data in google map
+  // const [locationsData, setLocationsData] = useState<LocationType[] | []>([]);
+  const [isLoadingLocations, setIsLoadingLocations] = useState(false);
 
   useEffect(() => {
+    async function getInitLocationsData() {
+      const initLocationsData: LocationType[] = await getLocations();
+      if (initLocationsData) {
+        // setLocationsData(initLocationsData);
+        // TODO: remove this mock
+        const locationsDataWithUnit: SelectLocationType[] = [
+          ...initLocationsData.map((location) => {
+            return { ...location, quantity: 0 };
+          }),
+        ];
+
+        setSelectedLocations(locationsDataWithUnit);
+        setIsLoadingLocations(false);
+      }
+    }
+
     async function getInitProductsData() {
       const initProductsData = await getProducts();
       if (initProductsData) {
@@ -53,71 +76,107 @@ const Calculator: FC<CalculatorPropsType> = () => {
     }
     setIsLoadingProducts(true);
     getInitProductsData();
+
+    setIsLoadingLocations(true);
+    getInitLocationsData();
   }, []);
 
   return (
     <Grid container className="p-3">
       <Grid item xs={12}>
-        <Card className="p-3">
+        <Card className="p-3" style={{ background: "#ccc" }}>
           <Grid item xs={12} className="py-3">
             <Typography variant="subtitle1">Calculator</Typography>
           </Grid>
-
-          <Grid item xs={12} className="pb-2">
-            <Typography variant="subtitle2" className="pb-1">
-              Select products
-            </Typography>
-            <Grid item xs={12}>
-              <Product
-                productsData={productsData}
-                isLoadingProducts={isLoadingProducts}
-                selectedProduct={selectedProduct}
-                handleProductChange={handleProductChange}
-              />
-            </Grid>
-          </Grid>
-
-          <Grid item xs={12} className="pb-2">
-            <Grid container>
-              <Grid item xs={12} className="pb-1">
-                <Typography variant="subtitle2">Select date</Typography>
-              </Grid>
+          <Card className="p-3 m-2">
+            <Grid item xs={12} className="pb-2">
+              <Typography variant="subtitle2" className="pb-1">
+                Select products {JSON.stringify(selectedProduct)}
+              </Typography>
               <Grid item xs={12}>
-                <DatePicker
-                  // TODO: fix date picker style
-                  // variant="inline"
-                  // inputVariant="outlined"
-                  // InputAdornmentProps={{ position: "end" }}
-                  value={selectedDate}
-                  onChange={(date) => handleDateChange(date)}
-                  format={DATE_FORMAT}
-                  disablePast
-                  fullWidth
-                  maxDate={addDays(new Date(), 7)}
-                  autoOk
+                <Product
+                  productsData={productsData}
+                  isLoadingProducts={isLoadingProducts}
+                  handleProductChange={handleProductChange}
                 />
               </Grid>
             </Grid>
-          </Grid>
 
-          <Grid item xs={12} className="pb-2">
-            <Typography variant="subtitle2" className="pb-1">
-              Select locations
-            </Typography>
-            <Grid item xs={12}>
-              <Location />
+            <Grid item xs={12} className="pb-2">
+              <Grid container>
+                <Grid item xs={12} className="pb-1">
+                  <Typography variant="subtitle2">Select date</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Card className="p-3">
+                    <DatePicker
+                      // TODO: fix date picker style
+                      // variant="inline"
+                      // inputVariant="outlined"
+                      // InputAdornmentProps={{ position: "end" }}
+                      value={selectedDate}
+                      onChange={(date) => handleDateChange(date)}
+                      format={DATE_FORMAT}
+                      disablePast
+                      fullWidth
+                      maxDate={addDays(new Date(), 7)}
+                      autoOk
+                    />
+                  </Card>
+                </Grid>
+              </Grid>
             </Grid>
-          </Grid>
+          </Card>
+
+          <Card className="p-3 m-2">
+            <Grid item xs={12} className="pb-2">
+              <Typography variant="subtitle2" className="pb-1">
+                Select locations
+              </Typography>
+              <Grid item xs={12}>
+                <Location
+                  selectedProduct={selectedProduct}
+                  isLoadingLocations={isLoadingLocations}
+                  selectedLocations={selectedLocations}
+                  setSelectedLocations={setSelectedLocations}
+                />
+              </Grid>
+            </Grid>
+          </Card>
 
           <Card className="p-3 m-2">
             <Grid item xs={12} className="py-3">
-              <Cart
-                cartInput={{
-                  date: format(selectedDate, DATE_FORMAT),
-                  product: Number(selectedProduct),
-                  locations: selectedLocations,
-                }}
-              />
+              <Grid item xs={12} className="py-3">
+                Total Units : {getTotalQuantity(selectedLocations)}
+              </Grid>
+
+              <Grid item xs={12} className="py-3">
+                Total Cost :&nbsp;
+                {Number(
+                  getTotalCost(selectedProduct, selectedLocations)
+                ).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </Grid>
+              {Boolean(
+                selectedProduct && getTotalQuantity(selectedLocations)
+              ) && (
+                <Cart
+                  cartInput={{
+                    date: format(selectedDate, DATE_FORMAT),
+                    product: Number(selectedProduct && selectedProduct.id),
+                    locations: selectedLocations.map(
+                      (location: SelectLocationType) => {
+                        return {
+                          id: Number(location.id),
+                          quantity: Number(location.quantity),
+                        };
+                      }
+                    ),
+                  }}
+                />
+              )}
             </Grid>
           </Card>
         </Card>
