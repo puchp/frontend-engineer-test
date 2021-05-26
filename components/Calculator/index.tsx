@@ -4,14 +4,12 @@ import { format, addDays } from "date-fns";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-
 import { DatePicker } from "@material-ui/pickers";
 
 import { getProducts } from "../../services/product";
 import { ProductType } from "../../types/Product";
 
-import { LocationType, SelectLocationType } from "../../types/Location";
-import { getLocations } from "../../services/location";
+import { SelectLocationType } from "../../types/Location";
 import { getTotalQuantity, getTotalCost } from "../../utils";
 
 import Cart from "../Cart";
@@ -46,27 +44,7 @@ const Calculator: FC<CalculatorPropsType> = () => {
   const [productsData, setProductsData] = useState<ProductType[] | []>([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState(false);
 
-  // TODO: using this data in google map
-  // const [locationsData, setLocationsData] = useState<LocationType[] | []>([]);
-  // const [isLoadingLocations, setIsLoadingLocations] = useState(false);
-
   useEffect(() => {
-    // async function getInitLocationsData() {
-    //   const initLocationsData: LocationType[] = await getLocations();
-    //   if (initLocationsData) {
-    //     // setLocationsData(initLocationsData);
-    //     // TODO: remove this mock
-    //     const locationsDataWithUnit: SelectLocationType[] = [
-    //       ...initLocationsData.map((location) => {
-    //         return { ...location, quantity: 0 };
-    //       }),
-    //     ];
-
-    //     setSelectedLocations(locationsDataWithUnit);
-    //     setIsLoadingLocations(false);
-    //   }
-    // }
-
     async function getInitProductsData() {
       const initProductsData = await getProducts();
       if (initProductsData) {
@@ -76,9 +54,6 @@ const Calculator: FC<CalculatorPropsType> = () => {
     }
     setIsLoadingProducts(true);
     getInitProductsData();
-
-    // setIsLoadingLocations(true);
-    // getInitLocationsData();
   }, []);
 
   return (
@@ -136,7 +111,6 @@ const Calculator: FC<CalculatorPropsType> = () => {
               <Grid item xs={12}>
                 <Location
                   selectedProduct={selectedProduct}
-                  // isLoadingLocations={isLoadingLocations}
                   selectedLocations={selectedLocations}
                   setSelectedLocations={setSelectedLocations}
                 />
