@@ -37,7 +37,10 @@ export const MarkerComponent: FC<MarkerPropsType> = (props) => {
   return (
     <>
       <ButtonBase onClick={handleClick}>
-        <RoomIcon color="secondary" fontSize={"large"} />
+        <RoomIcon
+          color={disabled ? "disabled" : "secondary"}
+          fontSize={"large"}
+        />
       </ButtonBase>
       <Popover
         id={popoverId}
@@ -62,10 +65,15 @@ export const MarkerComponent: FC<MarkerPropsType> = (props) => {
           }}
         >
           <Grid container>
-            <Typography variant="subtitle1">{name}</Typography>
-
-            <Typography variant="subtitle2"> max units: {max_dist}</Typography>
-            <Typography variant="subtitle2"> fee: {fee}</Typography>
+            <Grid item xs={12}>
+              <Typography variant="subtitle1">{name}</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="subtitle2">max units: {max_dist}</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="subtitle2"> fee: {fee}</Typography>
+            </Grid>
 
             <Grid container>
               <Grid item xs={8}></Grid>
