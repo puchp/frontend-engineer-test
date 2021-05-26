@@ -26,7 +26,7 @@ import Product from "../Product";
 type CalculatorPropsType = {};
 
 const Calculator: FC<CalculatorPropsType> = () => {
-  const [selectedProduct, handleProductChange] = useState([]);
+  const [selectedProduct, handleProductChange] = useState<string>("");
   const [selectedDate, handleDateChange] = useState(new Date());
   const [selectedLocations, handleLocationChange] = useState([]);
 
@@ -38,37 +38,44 @@ const Calculator: FC<CalculatorPropsType> = () => {
             <Typography variant="subtitle1">Calculator</Typography>
           </Grid>
 
-          <Grid item xs={12} className="py-3">
-            <Typography variant="subtitle2">Select products</Typography>
+          <Grid item xs={12} className="pb-2">
+            <Typography variant="subtitle2" className="pb-1">
+              Select products
+            </Typography>
             <Grid item xs={12}>
-              <Product />
+              <Product
+                selectedProduct={selectedProduct}
+                handleProductChange={handleProductChange}
+              />
             </Grid>
           </Grid>
 
-          <Grid item xs={12} className="py-3">
+          <Grid item xs={12} className="pb-2">
             <Grid container>
-              <Grid item xs={4}>
+              <Grid item xs={12} className="pb-1">
                 <Typography variant="subtitle2">Select date</Typography>
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={12}>
                 <KeyboardDatePicker
                   autoOk
                   variant="inline"
                   inputVariant="outlined"
-                  label="Select Date"
                   format="yyyy-MM-dd"
                   value={selectedDate}
                   InputAdornmentProps={{ position: "start" }}
                   onChange={(date) => handleDateChange(date)}
+                  fullWidth
                 />
               </Grid>
             </Grid>
           </Grid>
 
-          <Grid item xs={12} className="py-3">
-            <Typography variant="subtitle2">Select locations</Typography>
+          <Grid item xs={12} className="pb-2">
+            <Typography variant="subtitle2" className="pb-1">
+              Select locations
+            </Typography>
             <Grid item xs={12}>
-              <Location />
+              {/* <Location /> */}
             </Grid>
           </Grid>
 
