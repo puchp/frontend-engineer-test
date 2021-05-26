@@ -4,6 +4,9 @@ import "bootstrap-utilities/bootstrap-utilities.css";
 
 import Calculator from "../components/Calculator";
 
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -12,8 +15,9 @@ export default function Home() {
         <meta name="description" content="Product Calculator" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Calculator />
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Calculator />
+      </MuiPickersUtilsProvider>
     </div>
   );
 }
