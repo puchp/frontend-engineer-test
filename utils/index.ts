@@ -67,16 +67,26 @@ export const getTotalCost = (
 
 export const getMaximumAvailableProductFromDateSelected = (
   selectedProduct: ProductType | undefined,
-  date: Date
+  selectedDate: Date
 ) => {
+  //   For the Max Production the object has a key of number of days in the future
+  //   (i.e 1 is tomorrow, 2 is the day after) and the values are the number of items that can be produced (and therefore distributed) by that time.
+  //   If the number of days in the future the user has picked is greater than the largest days key then use the largest key.
+  //   For example if there are only values for days ahead 1, 2 and 3. If the user selects a date 5 days ahead then production value for 3 days is used.
+
   // selectedProduct.max_production: { "1": 5000, "2": 8000, "3": 12000 },
+
   if (selectedProduct && selectedProduct.max_production) {
     const maxProductionList = Object.values(selectedProduct.max_production);
-    const totalDays = differenceInDays(date, new Date());
+    const totalDays = differenceInDays(selectedDate, new Date());
+    const maxProduction =
+      totalDays > maxProductionList.length
+        ? maxProductionList[maxProductionList.length - 1]
+        : maxProductionList[totalDays];
 
-    return totalDays > maxProductionList.length
-      ? maxProductionList[maxProductionList.length - 1]
-      : maxProductionList[totalDays];
+    console.log({ maxProduction });
+
+    return maxProduction;
   }
   return 0;
 };
