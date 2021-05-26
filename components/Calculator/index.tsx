@@ -57,9 +57,9 @@ const Calculator: FC<CalculatorPropsType> = () => {
   }, []);
 
   return (
-    <Grid container className="p-3">
+    <Grid container className="p-1">
       <Grid item xs={12}>
-        <Card className="p-3" style={{ background: "#ccc" }}>
+        <Card className="p-1" style={{ background: "#ccc" }}>
           <Grid item xs={12} className="py-3">
             <Typography variant="subtitle1">Calculator</Typography>
           </Grid>
