@@ -64,13 +64,12 @@ const Calculator: FC<CalculatorPropsType> = () => {
               </Grid>
               <Grid item xs={12}>
                 <KeyboardDatePicker
-                  autoOk
-                  variant="inline"
                   inputVariant="outlined"
                   format={DATE_FORMAT}
                   value={selectedDate}
-                  InputAdornmentProps={{ position: "start" }}
+                  InputAdornmentProps={{ position: "end" }}
                   onChange={(date) => handleDateChange(date)}
+                  autoOk
                   fullWidth
                 />
               </Grid>
