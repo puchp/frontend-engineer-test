@@ -1,5 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import "bootstrap-utilities/bootstrap-utilities.css";
+
 import Calculator from "../components/Calculator";
 
 export default function Home() {

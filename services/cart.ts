@@ -12,6 +12,15 @@ import { InputCartType } from "../types/Cart";
 //  ○ Location ID
 //  ○ Quantity
 
+// it should response
+// {
+//   id: "1",
+//   status: "success",
+//   date: "2021-05-30",
+//   product: 1,
+//   locations: [{ id: 1, quantity: 100 }],
+// };
+
 export const submitCart = async (submitData: InputCartType) => {
   try {
     const response = await axios.post(`${API_URL}/cart`, { ...submitData });
