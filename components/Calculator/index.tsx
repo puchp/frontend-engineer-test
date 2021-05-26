@@ -1,11 +1,14 @@
-import React, { FC, useState } from "react";
-import { format } from "date-fns";
+import React, { FC, useState, useEffect } from "react";
+import { format, addDays } from "date-fns";
 
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-import { KeyboardDatePicker } from "@material-ui/pickers";
+import { DatePicker } from "@material-ui/pickers";
+
+import { getProducts } from "../../services/product";
+import { ProductType } from "../../types/Product";
 
 import Cart from "../Cart";
 import Location from "../Location";
@@ -37,6 +40,21 @@ const Calculator: FC<CalculatorPropsType> = () => {
     },
   ]);
 
+  const [isLoadingProducts, setIsLoadingProducts] = useState(false);
+  const [productsData, setProductsData] = useState<ProductType[] | []>([]);
+
+  useEffect(() => {
+    async function getInitProductsData() {
+      const initProductsData = await getProducts();
+      if (initProductsData) {
+        setProductsData(initProductsData);
+        setIsLoadingProducts(false);
+      }
+    }
+    setIsLoadingProducts(true);
+    getInitProductsData();
+  }, []);
+
   return (
     <Grid container className="p-3">
       <Grid item xs={12}>
@@ -51,6 +69,8 @@ const Calculator: FC<CalculatorPropsType> = () => {
             </Typography>
             <Grid item xs={12}>
               <Product
+                productsData={productsData}
+                isLoadingProducts={isLoadingProducts}
                 selectedProduct={selectedProduct}
                 handleProductChange={handleProductChange}
               />
@@ -63,14 +83,18 @@ const Calculator: FC<CalculatorPropsType> = () => {
                 <Typography variant="subtitle2">Select date</Typography>
               </Grid>
               <Grid item xs={12}>
-                <KeyboardDatePicker
-                  inputVariant="outlined"
-                  format={DATE_FORMAT}
+                <DatePicker
+                  // TODO: fix date picker style
+                  // variant="inline"
+                  // inputVariant="outlined"
+                  // InputAdornmentProps={{ position: "end" }}
                   value={selectedDate}
-                  InputAdornmentProps={{ position: "end" }}
                   onChange={(date) => handleDateChange(date)}
-                  autoOk
+                  format={DATE_FORMAT}
+                  disablePast
                   fullWidth
+                  maxDate={addDays(new Date(), 7)}
+                  autoOk
                 />
               </Grid>
             </Grid>

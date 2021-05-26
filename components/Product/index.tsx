@@ -5,34 +5,26 @@ import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 
-import { getProducts } from "../../services/product";
 import { ProductType } from "../../types/Product";
 
 type ProductPropsType = {
+  productsData: ProductType[];
   selectedProduct: string;
   handleProductChange: React.Dispatch<React.SetStateAction<string>>;
+  isLoadingProducts: boolean;
 };
 
 const Product: FC<ProductPropsType> = (props) => {
-  const { selectedProduct, handleProductChange } = props;
-  const [isLoadingProducts, setIsLoadingProducts] = useState(false);
-  const [productsData, setProductsData] = useState<ProductType[] | []>([]);
+  const {
+    handleProductChange,
+    isLoadingProducts,
+    productsData,
+    selectedProduct,
+  } = props;
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     handleProductChange(event.target.value as string);
   };
-
-  useEffect(() => {
-    async function getInitProductsData() {
-      const initProductsData = await getProducts();
-      if (initProductsData) {
-        setProductsData(initProductsData);
-        setIsLoadingProducts(false);
-      }
-    }
-    setIsLoadingProducts(true);
-    getInitProductsData();
-  }, []);
 
   return (
     <>

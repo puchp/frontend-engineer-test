@@ -6,6 +6,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
+import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 
 import { LocationType } from "../../types/Location";
@@ -83,7 +84,22 @@ const Location: FC<LocationPropsType> = () => {
                 <Typography variant="subtitle2">{location.name}</Typography>
               </Grid>
               <Grid item xs={3}>
-                <Typography variant="subtitle2">{location.fee}</Typography>
+                {/* <Typography variant="subtitle2">{location.fee}</Typography> */}
+                <TextField
+                  type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  defaultValue={location.max_dist}
+                  inputProps={{
+                    step: 1,
+                    min: 0,
+                    max: Number(location.max_dist),
+                    type: "number",
+                    style: { fontSize: 14, padding: 12 },
+                  }}
+                />
               </Grid>
               <Grid item xs={3}>
                 <Typography variant="subtitle2">{location.max_dist}</Typography>
