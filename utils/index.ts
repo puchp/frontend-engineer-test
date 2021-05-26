@@ -69,13 +69,10 @@ export const getMaximumAvailableProductFromDateSelected = (
   selectedProduct: ProductType | undefined,
   date: Date
 ) => {
-  // console.log(selectedProduct, date);
   // selectedProduct.max_production: { "1": 5000, "2": 8000, "3": 12000 },
   if (selectedProduct && selectedProduct.max_production) {
     const maxProductionList = Object.values(selectedProduct.max_production);
     const totalDays = differenceInDays(date, new Date());
-
-    console.log(maxProductionList, { totalDays });
 
     return totalDays > maxProductionList.length
       ? maxProductionList[maxProductionList.length - 1]
