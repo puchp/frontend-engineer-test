@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { format } from "date-fns";
 
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
@@ -10,6 +11,7 @@ import Cart from "../Cart";
 import Location from "../Location";
 import Product from "../Product";
 
+const DATE_FORMAT = "yyyy-MM-dd";
 // 1) The User will pick the product and date.
 //     Based on this choice the app can work out the maximum number of units available to produce on that date.
 //
@@ -28,7 +30,12 @@ type CalculatorPropsType = {};
 const Calculator: FC<CalculatorPropsType> = () => {
   const [selectedProduct, handleProductChange] = useState<string>("");
   const [selectedDate, handleDateChange] = useState(new Date());
-  const [selectedLocations, handleLocationChange] = useState([]);
+  const [selectedLocations, handleLocationChange] = useState([
+    {
+      id: 1,
+      quantity: 100,
+    },
+  ]);
 
   return (
     <Grid container className="p-3">
@@ -60,7 +67,7 @@ const Calculator: FC<CalculatorPropsType> = () => {
                   autoOk
                   variant="inline"
                   inputVariant="outlined"
-                  format="yyyy-MM-dd"
+                  format={DATE_FORMAT}
                   value={selectedDate}
                   InputAdornmentProps={{ position: "start" }}
                   onChange={(date) => handleDateChange(date)}
@@ -75,13 +82,19 @@ const Calculator: FC<CalculatorPropsType> = () => {
               Select locations
             </Typography>
             <Grid item xs={12}>
-              {/* <Location /> */}
+              <Location />
             </Grid>
           </Grid>
 
           <Card className="p-3 m-2">
             <Grid item xs={12} className="py-3">
-              <Cart />
+              <Cart
+                cartInput={{
+                  date: format(selectedDate, DATE_FORMAT),
+                  product: Number(selectedProduct),
+                  locations: selectedLocations,
+                }}
+              />
             </Grid>
           </Card>
         </Card>
