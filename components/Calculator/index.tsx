@@ -48,24 +48,24 @@ const Calculator: FC<CalculatorPropsType> = () => {
 
   // TODO: using this data in google map
   // const [locationsData, setLocationsData] = useState<LocationType[] | []>([]);
-  const [isLoadingLocations, setIsLoadingLocations] = useState(false);
+  // const [isLoadingLocations, setIsLoadingLocations] = useState(false);
 
   useEffect(() => {
-    async function getInitLocationsData() {
-      const initLocationsData: LocationType[] = await getLocations();
-      if (initLocationsData) {
-        // setLocationsData(initLocationsData);
-        // TODO: remove this mock
-        const locationsDataWithUnit: SelectLocationType[] = [
-          ...initLocationsData.map((location) => {
-            return { ...location, quantity: 0 };
-          }),
-        ];
+    // async function getInitLocationsData() {
+    //   const initLocationsData: LocationType[] = await getLocations();
+    //   if (initLocationsData) {
+    //     // setLocationsData(initLocationsData);
+    //     // TODO: remove this mock
+    //     const locationsDataWithUnit: SelectLocationType[] = [
+    //       ...initLocationsData.map((location) => {
+    //         return { ...location, quantity: 0 };
+    //       }),
+    //     ];
 
-        setSelectedLocations(locationsDataWithUnit);
-        setIsLoadingLocations(false);
-      }
-    }
+    //     setSelectedLocations(locationsDataWithUnit);
+    //     setIsLoadingLocations(false);
+    //   }
+    // }
 
     async function getInitProductsData() {
       const initProductsData = await getProducts();
@@ -77,8 +77,8 @@ const Calculator: FC<CalculatorPropsType> = () => {
     setIsLoadingProducts(true);
     getInitProductsData();
 
-    setIsLoadingLocations(true);
-    getInitLocationsData();
+    // setIsLoadingLocations(true);
+    // getInitLocationsData();
   }, []);
 
   return (
@@ -136,7 +136,7 @@ const Calculator: FC<CalculatorPropsType> = () => {
               <Grid item xs={12}>
                 <Location
                   selectedProduct={selectedProduct}
-                  isLoadingLocations={isLoadingLocations}
+                  // isLoadingLocations={isLoadingLocations}
                   selectedLocations={selectedLocations}
                   setSelectedLocations={setSelectedLocations}
                 />

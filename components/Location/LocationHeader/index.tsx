@@ -1,11 +1,21 @@
 import React, { FC } from "react";
 
-import AddIcon from "@material-ui/icons/Add";
-import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Map from "../../Map";
 
-const LocationHeader: FC = () => {
+import { SelectLocationType } from "../../../types/Location";
+
+type LocationHeaderPropsType = {
+  selectedLocations: SelectLocationType[];
+  setSelectedLocations: React.Dispatch<
+    React.SetStateAction<SelectLocationType[] | []>
+  >;
+};
+
+const LocationHeader: FC<LocationHeaderPropsType> = (props) => {
+  const { selectedLocations, setSelectedLocations } = props;
+
   return (
     <Grid container justify="center" alignContent="center" alignItems="center">
       <Grid item xs={3}>
@@ -18,9 +28,10 @@ const LocationHeader: FC = () => {
         <Typography variant="subtitle1">Cost</Typography>
       </Grid>
       <Grid item xs={2} container justify="center">
-        <Button variant="outlined">
-          <AddIcon fontSize="small" />
-        </Button>
+        <Map
+          selectedLocations={selectedLocations}
+          setSelectedLocations={setSelectedLocations}
+        />
       </Grid>
     </Grid>
   );
