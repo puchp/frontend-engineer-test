@@ -51,9 +51,15 @@ const LocationList: FC<LocationPropsType> = (props) => {
   return (
     <>
       {selectedLocations.map((location: SelectLocationType) => {
-        const maximumAmount = getMaximumAvailableProductFromDateSelected(
-          selectedProduct,
-          selectedDate
+        const maximumAmountFromProduct =
+          getMaximumAvailableProductFromDateSelected(
+            selectedProduct,
+            selectedDate
+          );
+
+        const maximumAmount = Math.min(
+          maximumAmountFromProduct,
+          location.max_dist
         );
 
         return (
