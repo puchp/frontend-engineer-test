@@ -14,10 +14,12 @@ type MarkerPropsType = {
   max_dist: number;
   id: string;
   addLocation: Function;
+  disabled: boolean;
 };
 
 export const MarkerComponent: FC<MarkerPropsType> = (props) => {
-  const { text, lat, lng, fee, max_dist, id, addLocation } = props;
+  const { text, fee, max_dist, id, addLocation, disabled } = props;
+
   const [anchorEl, setAnchorEl] =
     React.useState<HTMLButtonElement | null>(null);
 
@@ -66,6 +68,7 @@ export const MarkerComponent: FC<MarkerPropsType> = (props) => {
               </Grid>
               <Grid item xs={4}>
                 <Button
+                  disabled={disabled}
                   variant="contained"
                   onClick={() => {
                     addLocation(id);

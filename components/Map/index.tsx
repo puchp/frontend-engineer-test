@@ -60,6 +60,16 @@ const Map: FC<LocationHeaderPropsType> = (props) => {
     }
   };
 
+  const checkIsAlreadySelectedLocation = (id: string) => {
+    const findLocationById = selectedLocations.find(
+      (location: LocationType) => location.id === id
+    );
+    if (findLocationById) {
+      return true;
+    }
+    return false;
+  };
+
   useEffect(() => {
     async function getInitLocationsData() {
       const initLocationsData: LocationType[] = await getLocations();
@@ -121,6 +131,7 @@ const Map: FC<LocationHeaderPropsType> = (props) => {
                   fee={location.fee}
                   max_dist={location.max_dist}
                   addLocation={addLocation}
+                  disabled={checkIsAlreadySelectedLocation(location.id)}
                 />
               ))}
             </GoogleMapReact>
