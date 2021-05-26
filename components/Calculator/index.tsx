@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import Product from "../Product";
 import Location from "../Location";
 import Cart from "../Cart";
+import "bootstrap-utilities/bootstrap-utilities.css";
 
 // The User will pick the product and date. Based on this choice the app can work out the maximum number of units available to produce on that date.
 // The User will add locations. Clicking the ADD button will open the Location Map. Once a location is added the user can click and adjust the number of units for that location.
