@@ -91,10 +91,7 @@ const LocationList: FC<LocationPropsType> = (props) => {
                 onChange={(event) => {
                   handleChangeUnit(location.id, event.target.value);
                 }}
-                error={
-                  // TODO: move to form validate
-                  location.quantity > maximumAmount
-                }
+                error={location.quantity > maximumAmount}
                 helperText={`maximum ${maximumAmount}`}
               />
             </Grid>

@@ -118,7 +118,11 @@ const Calculator: FC<CalculatorPropsType> = () => {
               </Grid>
             </Card>
           )}
-          {Boolean(selectedProduct && selectedLocations.length) && (
+          {Boolean(
+            selectedProduct &&
+              selectedLocations.length &&
+              getTotalQuantity(selectedLocations)
+          ) && (
             <Card className="p-3 m-2">
               <Grid item xs={12} className="py-3">
                 <Grid item xs={12} className="py-3">
@@ -134,24 +138,20 @@ const Calculator: FC<CalculatorPropsType> = () => {
                     maximumFractionDigits: 2,
                   })}
                 </Grid>
-                {Boolean(
-                  selectedProduct && getTotalQuantity(selectedLocations)
-                ) && (
-                  <Cart
-                    cartInput={{
-                      date: format(selectedDate, DATE_FORMAT),
-                      product: Number(selectedProduct && selectedProduct.id),
-                      locations: selectedLocations.map(
-                        (location: SelectLocationType) => {
-                          return {
-                            id: Number(location.id),
-                            quantity: Number(location.quantity),
-                          };
-                        }
-                      ),
-                    }}
-                  />
-                )}
+                <Cart
+                  cartInput={{
+                    date: format(selectedDate, DATE_FORMAT),
+                    product: Number(selectedProduct && selectedProduct.id),
+                    locations: selectedLocations.map(
+                      (location: SelectLocationType) => {
+                        return {
+                          id: Number(location.id),
+                          quantity: Number(location.quantity),
+                        };
+                      }
+                    ),
+                  }}
+                />
               </Grid>
             </Card>
           )}
