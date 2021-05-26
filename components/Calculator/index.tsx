@@ -15,7 +15,7 @@ import { SelectLocationType } from "../../types/Location";
 import { getTotalQuantity, getTotalCost } from "../../utils";
 
 import Cart from "../Cart";
-import Location from "../Location";
+import Location from "../ProductBasedLocation";
 import Product from "../Product";
 
 const DATE_FORMAT = "yyyy-MM-dd";

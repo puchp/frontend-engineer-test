@@ -6,14 +6,14 @@ import Map from "../../Map";
 
 import { SelectLocationType } from "../../../types/Location";
 
-type LocationHeaderPropsType = {
+type HeaderPropsType = {
   selectedLocations: SelectLocationType[];
   setSelectedLocations: React.Dispatch<
     React.SetStateAction<SelectLocationType[] | []>
   >;
 };
 
-const LocationHeader: FC<LocationHeaderPropsType> = (props) => {
+const Header: FC<HeaderPropsType> = (props) => {
   const { selectedLocations, setSelectedLocations } = props;
 
   return (
@@ -38,4 +38,4 @@ const LocationHeader: FC<LocationHeaderPropsType> = (props) => {
   );
 };
 
-export default LocationHeader;
+export default Header;

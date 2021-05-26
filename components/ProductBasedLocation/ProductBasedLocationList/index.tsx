@@ -13,7 +13,7 @@ import {
   getMaximumAvailableProductFromDateSelected,
 } from "../../../utils";
 
-type LocationPropsType = {
+type ProductBasedLocationListPropsType = {
   selectedDate: Date;
   selectedProduct: ProductType | undefined;
   selectedLocations: SelectLocationType[];
@@ -22,7 +22,9 @@ type LocationPropsType = {
   >;
 };
 
-const LocationList: FC<LocationPropsType> = (props) => {
+const ProductBasedLocationList: FC<ProductBasedLocationListPropsType> = (
+  props
+) => {
   const {
     selectedDate,
     selectedLocations,
@@ -121,4 +123,4 @@ const LocationList: FC<LocationPropsType> = (props) => {
   );
 };
 
-export default LocationList;
+export default ProductBasedLocationList;

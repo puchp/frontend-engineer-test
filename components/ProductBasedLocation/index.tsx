@@ -6,10 +6,10 @@ import Typography from "@material-ui/core/Typography";
 import { ProductType } from "../../types/Product";
 import { SelectLocationType } from "../../types/Location";
 
-import LocationHeader from "./LocationHeader";
-import LocationList from "./LocationList";
+import Header from "./Header";
+import ProductBasedLocationList from "./ProductBasedLocationList";
 
-type LocationPropsType = {
+type ProductBasedLocationPropsType = {
   selectedDate: Date;
   selectedLocations: SelectLocationType[];
   selectedProduct: ProductType | undefined;
@@ -18,7 +18,7 @@ type LocationPropsType = {
   >;
 };
 
-const Location: FC<LocationPropsType> = (props) => {
+const ProductBasedLocation: FC<ProductBasedLocationPropsType> = (props) => {
   const {
     selectedDate,
     selectedLocations,
@@ -28,12 +28,12 @@ const Location: FC<LocationPropsType> = (props) => {
 
   return (
     <Grid container justify="center">
-      <LocationHeader
+      <Header
         selectedLocations={selectedLocations}
         setSelectedLocations={setSelectedLocations}
       />
       {selectedLocations.length ? (
-        <LocationList
+        <ProductBasedLocationList
           selectedDate={selectedDate}
           selectedProduct={selectedProduct}
           selectedLocations={selectedLocations}
@@ -46,4 +46,4 @@ const Location: FC<LocationPropsType> = (props) => {
   );
 };
 
-export default Location;
+export default ProductBasedLocation;

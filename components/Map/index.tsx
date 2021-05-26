@@ -125,6 +125,7 @@ const Map: FC<LocationHeaderPropsType> = (props) => {
             >
               {locationsData.map((location: LocationType) => (
                 <MarkerComponent
+                  key={location.id}
                   id={location.id}
                   name={location.name}
                   lat={location.lat}

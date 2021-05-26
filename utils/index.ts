@@ -84,8 +84,6 @@ export const getMaximumAvailableProductFromDateSelected = (
         ? maxProductionList[maxProductionList.length - 1]
         : maxProductionList[totalDays];
 
-    console.log({ maxProduction });
-
     return maxProduction;
   }
   return 0;
