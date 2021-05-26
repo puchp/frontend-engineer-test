@@ -1,11 +1,14 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
+import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-import Product from "../Product";
-import Location from "../Location";
+import { KeyboardDatePicker } from "@material-ui/pickers";
+
 import Cart from "../Cart";
+import Location from "../Location";
+import Product from "../Product";
 
 // 1) The User will pick the product and date.
 //     Based on this choice the app can work out the maximum number of units available to produce on that date.
@@ -20,29 +23,62 @@ import Cart from "../Cart";
 //
 // 5) On Submit then post to the Cart endpoint and show the user a simple success page.
 
-type CalculatorPropsType = {
-  // props: string;
-};
+type CalculatorPropsType = {};
 
 const Calculator: FC<CalculatorPropsType> = () => {
+  const [selectedProduct, handleProductChange] = useState([]);
+  const [selectedDate, handleDateChange] = useState(new Date());
+  const [selectedLocations, handleLocationChange] = useState([]);
+
   return (
-    <Grid container>
+    <Grid container className="p-3">
       <Grid item xs={12}>
-        <Typography>Calculator</Typography>
+        <Card className="p-3">
+          <Grid item xs={12} className="py-3">
+            <Typography variant="subtitle1">Calculator</Typography>
+          </Grid>
+
+          <Grid item xs={12} className="py-3">
+            <Typography variant="subtitle2">Select products</Typography>
+            <Grid item xs={12}>
+              <Product />
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12} className="py-3">
+            <Grid container>
+              <Grid item xs={4}>
+                <Typography variant="subtitle2">Select date</Typography>
+              </Grid>
+              <Grid item xs={8}>
+                <KeyboardDatePicker
+                  autoOk
+                  variant="inline"
+                  inputVariant="outlined"
+                  label="Select Date"
+                  format="yyyy-MM-dd"
+                  value={selectedDate}
+                  InputAdornmentProps={{ position: "start" }}
+                  onChange={(date) => handleDateChange(date)}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12} className="py-3">
+            <Typography variant="subtitle2">Select locations</Typography>
+            <Grid item xs={12}>
+              <Location />
+            </Grid>
+          </Grid>
+
+          <Card className="p-3 m-2">
+            <Grid item xs={12} className="py-3">
+              <Cart />
+            </Grid>
+          </Card>
+        </Card>
       </Grid>
-      <hr />
-      {/* <Grid item xs={12}>
-        <Product />
-      </Grid> */}
-      <hr />
-      {/* <Grid item xs={12}>
-        <Location />
-      </Grid> */}
-      <hr />
-      <Grid item xs={12}>
-        <Cart />
-      </Grid>
-      <hr />
     </Grid>
   );
 };
