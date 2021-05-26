@@ -159,7 +159,9 @@ const Calculator: FC<CalculatorPropsType> = () => {
                   maximumFractionDigits: 2,
                 })}
               </Grid>
-              {selectedProduct && (
+              {Boolean(
+                selectedProduct && getTotalQuantity(selectedLocations)
+              ) && (
                 <Cart
                   cartInput={{
                     date: format(selectedDate, DATE_FORMAT),
