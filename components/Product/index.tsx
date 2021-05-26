@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
@@ -9,21 +9,20 @@ import { ProductType } from "../../types/Product";
 
 type ProductPropsType = {
   productsData: ProductType[];
-  selectedProduct: string;
-  handleProductChange: React.Dispatch<React.SetStateAction<string>>;
+  handleProductChange: React.Dispatch<
+    React.SetStateAction<ProductType | undefined>
+  >;
   isLoadingProducts: boolean;
 };
 
 const Product: FC<ProductPropsType> = (props) => {
-  const {
-    handleProductChange,
-    isLoadingProducts,
-    productsData,
-    selectedProduct,
-  } = props;
+  const { handleProductChange, isLoadingProducts, productsData } = props;
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    handleProductChange(event.target.value as string);
+    const getProductFromID = productsData.find(
+      (product) => product.id === event.target.value
+    );
+    handleProductChange(getProductFromID);
   };
 
   return (
@@ -36,7 +35,6 @@ const Product: FC<ProductPropsType> = (props) => {
         <Select
           variant="outlined"
           id="product-select"
-          value={selectedProduct}
           onChange={handleChange}
           fullWidth
         >

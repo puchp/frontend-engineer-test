@@ -23,7 +23,6 @@ const Cart: FC<CartPropsType> = (props) => {
 
   return (
     <div>
-      "Cart component"
       {responseInfo && <p>{JSON.stringify(responseInfo)}</p>}
       <br />
       <p>cartInput: {JSON.stringify(cartInput)}</p>
