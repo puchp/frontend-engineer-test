@@ -3,6 +3,7 @@ import { submitCart } from "../../services/cart";
 import { InputCartType } from "../../types/Cart";
 
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
@@ -14,6 +15,7 @@ type CartPropsType = {
 const Cart: FC<CartPropsType> = (props) => {
   const { cartInput } = props;
   const [isSubmitCart, setIsSubmitCart] = useState(false);
+  // TODO: change any to axios post response
   const [responseInfo, setResponseInfo] = useState<any>(null);
 
   const [open, setOpen] = React.useState(false);
@@ -30,42 +32,49 @@ const Cart: FC<CartPropsType> = (props) => {
   };
 
   const handleSubmitCart = async () => {
-    // setIsSubmitCart(true);
-    // const response = await submitCart(cartInput);
-    // setIsSubmitCart(false);
-
-    // setResponseInfo(response);
-
+    setIsSubmitCart(true);
+    const response = await submitCart(cartInput);
+    // response = {"id":"3","status":"success","date":"2021-05-27","product":1,"locations":[{"id":4,"quantity":10}]}
+    setIsSubmitCart(false);
+    setResponseInfo(response);
+    // TODO: clear cart
     setOpen(true);
-    // console.log({ response });
   };
+
+  console.log({ cartInput });
 
   return (
     <div>
-      <button
-        type="button"
-        onClick={() => handleSubmitCart()}
-        disabled={isSubmitCart}
-      >
-        Submit
-      </button>
-      <br />
-      <p>cartInput: {JSON.stringify(cartInput)}</p>
-      <br />
+      <Grid container justify="center">
+        <Button
+          onClick={() => handleSubmitCart()}
+          disabled={isSubmitCart}
+          variant="outlined"
+        >
+          Submit
+        </Button>
+      </Grid>
 
       <Snackbar
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+          vertical: "top",
+          horizontal: "right",
         }}
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={10000} // after 10s
         onClose={handleClose}
-        message="Note archived"
+        message={responseInfo?.data?.status}
         action={
-          <React.Fragment>
-            <Button color="secondary" size="small" onClick={handleClose}>
-              {responseInfo && <p>{JSON.stringify(responseInfo)}</p>}
+          <>
+            <Button
+              style={{
+                color:
+                  responseInfo?.data?.status === "success" ? "#5a5" : "#f577",
+              }}
+              size="small"
+              onClick={handleClose}
+            >
+              {responseInfo?.data?.date}
             </Button>
             <IconButton
               size="small"
@@ -75,7 +84,7 @@ const Cart: FC<CartPropsType> = (props) => {
             >
               <CloseIcon fontSize="small" />
             </IconButton>
-          </React.Fragment>
+          </>
         }
       />
     </div>
