@@ -66,7 +66,7 @@ const Calculator: FC<CalculatorPropsType> = () => {
           <Card className="p-3 m-2">
             <Grid item xs={12} className="pb-2">
               <Typography variant="subtitle2" className="pb-1">
-                Select products {JSON.stringify(selectedProduct)}
+                Select products
               </Typography>
               <Grid item xs={12}>
                 <Product
@@ -102,57 +102,58 @@ const Calculator: FC<CalculatorPropsType> = () => {
               </Grid>
             </Grid>
           </Card>
+          {Boolean(selectedProduct) && (
+            <Card className="p-3 m-2">
+              <Grid item xs={12} className="pb-2">
+                <Typography variant="subtitle2">Select locations</Typography>
 
-          <Card className="p-3 m-2">
-            <Grid item xs={12} className="pb-2">
-              <Typography variant="subtitle2" className="pb-1">
-                Select locations
-              </Typography>
-              <Grid item xs={12}>
-                <Location
-                  selectedProduct={selectedProduct}
-                  selectedLocations={selectedLocations}
-                  setSelectedLocations={setSelectedLocations}
-                />
+                <Grid item xs={12} className="mt-1">
+                  <Location
+                    selectedProduct={selectedProduct}
+                    selectedLocations={selectedLocations}
+                    setSelectedLocations={setSelectedLocations}
+                  />
+                </Grid>
               </Grid>
-            </Grid>
-          </Card>
-
-          <Card className="p-3 m-2">
-            <Grid item xs={12} className="py-3">
+            </Card>
+          )}
+          {Boolean(selectedProduct && selectedLocations.length) && (
+            <Card className="p-3 m-2">
               <Grid item xs={12} className="py-3">
-                Total Units : {getTotalQuantity(selectedLocations)}
-              </Grid>
+                <Grid item xs={12} className="py-3">
+                  Total Units : {getTotalQuantity(selectedLocations)}
+                </Grid>
 
-              <Grid item xs={12} className="py-3">
-                Total Cost :&nbsp;
-                {Number(
-                  getTotalCost(selectedProduct, selectedLocations)
-                ).toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
+                <Grid item xs={12} className="py-3">
+                  Total Cost :&nbsp;
+                  {Number(
+                    getTotalCost(selectedProduct, selectedLocations)
+                  ).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </Grid>
+                {Boolean(
+                  selectedProduct && getTotalQuantity(selectedLocations)
+                ) && (
+                  <Cart
+                    cartInput={{
+                      date: format(selectedDate, DATE_FORMAT),
+                      product: Number(selectedProduct && selectedProduct.id),
+                      locations: selectedLocations.map(
+                        (location: SelectLocationType) => {
+                          return {
+                            id: Number(location.id),
+                            quantity: Number(location.quantity),
+                          };
+                        }
+                      ),
+                    }}
+                  />
+                )}
               </Grid>
-              {Boolean(
-                selectedProduct && getTotalQuantity(selectedLocations)
-              ) && (
-                <Cart
-                  cartInput={{
-                    date: format(selectedDate, DATE_FORMAT),
-                    product: Number(selectedProduct && selectedProduct.id),
-                    locations: selectedLocations.map(
-                      (location: SelectLocationType) => {
-                        return {
-                          id: Number(location.id),
-                          quantity: Number(location.quantity),
-                        };
-                      }
-                    ),
-                  }}
-                />
-              )}
-            </Grid>
-          </Card>
+            </Card>
+          )}
         </Card>
       </Grid>
     </Grid>
